@@ -1,0 +1,24 @@
+<h1>Search Books</h1>
+
+<%= form_tag('/home', method: :get) do %>
+  <%= text_field_tag :q, params[:q], placeholder: 'Search by book title' %>
+  <%= submit_tag 'Search' %>
+<% end %>
+
+<% if @books.present? %>
+  <h2>Search Results</h2>
+  <ul>
+    <% @books.each do |book| %>
+      <li>
+        <%= book['volumeInfo']['title'] %>
+        <% if book['volumeInfo']['imageLinks'] && book['volumeInfo']['imageLinks']['thumbnail'] %>
+          <img src="<%= book['volumeInfo']['imageLinks']['thumbnail'] %>" alt="Capa do Livro">
+        <% else %>
+          <p>No capa available.</p>
+        <% end %>
+      </li>
+    <% end %>
+  </ul>
+<% else %>
+  <p>No results found.</p>
+<% end %>
